@@ -4,20 +4,25 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_principal"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Principal" />
+        <item
+            android:id="@+id/nav_espana"
             android:icon="@drawable/ic_menu_camera"
             android:title="Festivales de España" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_portugal"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Festivales de Portugal" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_bélgica"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Festivales de Francia" />
+            android:title="Festivales de Bélgica" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_alemania"
             android:icon="@drawable/ic_menu_manage"
             android:title="Festivales de Alemania" />
     </group>

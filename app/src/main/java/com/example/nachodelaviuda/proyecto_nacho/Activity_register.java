@@ -17,15 +17,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
 
-public class Activity_register extends AppCompatActivity implements View.OnClickListener{
+public class Activity_register extends AppCompatActivity implements View.OnClickListener {
     /*
      * Autenticacion usuario con Firebase
      */
     private FirebaseAuth mAuth;
+    private FirebaseUser usuario;
     private static final String TAG = "EmailPassword";
 
     private EditText edtNombre;
@@ -33,7 +36,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
     private EditText edtCorreo;
     private EditText edtContrasenia;
     private EditText edtcontrasenia2;
-
+    private boolean usuarioCreado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +55,10 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
 
         mAuth = FirebaseAuth.getInstance();
 
+        usuarioCreado = false;
     }
 
-    private boolean validarDatos(){
+    private boolean validarDatos() {
         // Declaracion de variables
 
         boolean continuar = true;
@@ -68,7 +72,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             edtNombre.setError(null);
         }
 
-        String edad= edtEdad.getText().toString();
+        String edad = edtEdad.getText().toString();
         if (TextUtils.isEmpty(edad)) {
             edtEdad.setError("Required.");
             continuar = false;
@@ -76,7 +80,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             edtEdad.setError(null);
         }
 
-        String correo= edtCorreo.getText().toString();
+        String correo = edtCorreo.getText().toString();
         if (TextUtils.isEmpty(correo)) {
             edtCorreo.setError("Required.");
             continuar = false;
@@ -84,7 +88,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             edtCorreo.setError(null);
         }
 
-        String contrasenia= edtContrasenia.getText().toString();
+        String contrasenia = edtContrasenia.getText().toString();
         if (TextUtils.isEmpty(contrasenia)) {
             edtContrasenia.setError("Required.");
             continuar = false;
@@ -92,42 +96,68 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             edtContrasenia.setError(null);
         }
 
-        String confirmarContrasenia= edtcontrasenia2.getText().toString();
+        String confirmarContrasenia = edtcontrasenia2.getText().toString();
         if (TextUtils.isEmpty(confirmarContrasenia)) {
             edtcontrasenia2.setError("Required.");
             continuar = false;
-        }else if(confirmarContrasenia.trim().equals(contrasenia.trim())){
+        } else if (!confirmarContrasenia.trim().equals(contrasenia.trim())) {
             edtcontrasenia2.setError("Needs to be the same password");
-            continuar = true;
-        }else {
+        }else{
             edtcontrasenia2.setError(null);
         }
-
         return continuar;
     }
 
+
+    //[FIREBASE] CREAR USUARIO A TRAVES DEL CORREO Y CONTRASEÑA
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validarDatos()) {
-            return;
-        }
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+            Toast.makeText(Activity_register.this, "No se ha completado el registro", Toast.LENGTH_LONG).show();
+        } else {
+            // [START create_user_with_email]
+            Toast.makeText(Activity_register.this, "De momento vas bn", Toast.LENGTH_LONG).show();
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    //[AZAHARA]--------------------------------------------------------------
+                    if (task.isSuccessful()) {
+                        usuario = mAuth.getCurrentUser();
+                        //Agregamos el correo del usuario al perfil del usuario
+                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().
+                                setDisplayName(edtCorreo.getText().toString()).build();
+
+                        //Devolvemos el nombre de usuario para pasarselo al toast
+                        usuario.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    String us = usuario.getDisplayName();
+                                    Toast.makeText(Activity_register.this, "Bienvenid@" + us, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(Activity_register.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        //Toast.makeText(Activity_register.this, "Authentication failed.",
+                        //       Toast.LENGTH_SHORT).show();
+
+
+                        //[Azahara]--------------------------------------------------------------
+                        //En el caso de que exista el usuario no se volverá a crear
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            Toast.makeText(Activity_register.this, "El usuario ya existe", Toast.LENGTH_LONG).show();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(Activity_register.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Activity_register.this, "Error al regisrar usuario", Toast.LENGTH_LONG).show();
                         }
                     }
-                });
+                }
+            });
+        }
         // [END create_user_with_email]
     }
 
@@ -139,6 +169,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             startActivity(intentoCancelar);
         } else if (i == R.id.button_register_sucessfully) {
             createAccount(edtCorreo.getText().toString(), edtContrasenia.getText().toString());
+
             Intent intentoAprobado = new Intent(Activity_register.this, LoginActivity.class);
             intentoAprobado.putExtra("pasoDeEmail", edtCorreo.getText().toString().trim());
             startActivity(intentoAprobado);

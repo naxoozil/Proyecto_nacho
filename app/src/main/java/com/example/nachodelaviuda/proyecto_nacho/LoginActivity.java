@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // [START on_start_check_user]
+    // verifica que el usuario haya accedido
     @Override
     public void onStart() {
         super.onStart();
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+
                         }
                     }
                 });

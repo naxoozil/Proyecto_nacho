@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +24,19 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPrincipal()).commit();
+            navigationView.setCheckedItem(R.id.nav_principal);
+        }
     }
 
     @Override
@@ -66,24 +74,35 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch(item.getItemId()){
+            case R.id.nav_principal:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPrincipal()).commit();
+                break;
+            case R.id.nav_espana:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoEspaña()).commit();
+            break;
+            case R.id.nav_portugal:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPortugal()).commit();
+                break;
+            case R.id.nav_bélgica:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoBelgica()).commit();
+                break;
+            case R.id.nav_alemania:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoAlemania()).commit();
+                break;
+            case R.id.nav_share:
+                Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_send:
+                Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.help:
+                Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.information:
+                Toast.makeText(this,"information", Toast.LENGTH_SHORT).show();
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
