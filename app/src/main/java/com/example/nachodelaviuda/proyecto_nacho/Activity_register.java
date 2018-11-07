@@ -29,6 +29,8 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
      */
     private FirebaseAuth mAuth;
     private FirebaseUser usuario;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;//<--NUEVO
     private static final String TAG = "EmailPassword";
 
     private EditText edtNombre;
@@ -55,7 +57,19 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
 
         mAuth = FirebaseAuth.getInstance();
 
-        usuarioCreado = false;
+        //-------------NUEVO----------------------------
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d("Main Activity", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    Log.d("Main Activity", "onAuthStateChanged:signed_out");
+                }
+            }
+        }; //-------------NUEVO----------------------------
+        usuarioCreado = true;
     }
 
     private boolean validarDatos() {
@@ -102,7 +116,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             continuar = false;
         } else if (!confirmarContrasenia.trim().equals(contrasenia.trim())) {
             edtcontrasenia2.setError("Needs to be the same password");
-        }else{
+        } else {
             edtcontrasenia2.setError(null);
         }
         return continuar;
@@ -111,6 +125,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
 
     //[FIREBASE] CREAR USUARIO A TRAVES DEL CORREO Y CONTRASEÑA
     private void createAccount(String email, String password) {
+        usuarioCreado = false;
         Log.d(TAG, "createAccount:" + email);
         if (!validarDatos()) {
             Toast.makeText(Activity_register.this, "No se ha completado el registro", Toast.LENGTH_LONG).show();
@@ -120,12 +135,17 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    //-------------NUEVO----------------------------
+                    //Log.d("Main Activity", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                    //-------------NUEVO----------------------------
+
+
                     //[AZAHARA]--------------------------------------------------------------
                     if (task.isSuccessful()) {
                         usuario = mAuth.getCurrentUser();
                         //Agregamos el correo del usuario al perfil del usuario
                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().
-                                setDisplayName(edtCorreo.getText().toString()).build();
+                                setDisplayName(edtNombre.getText().toString()).build();
 
                         //Devolvemos el nombre de usuario para pasarselo al toast
                         usuario.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -134,6 +154,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
                                 if (task.isSuccessful()) {
                                     String us = usuario.getDisplayName();
                                     Toast.makeText(Activity_register.this, "Bienvenid@" + us, Toast.LENGTH_LONG).show();
+                                    usuarioCreado = true;
                                     Intent intent = new Intent(Activity_register.this, LoginActivity.class);
                                     startActivity(intent);
                                 }
@@ -169,11 +190,25 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             startActivity(intentoCancelar);
         } else if (i == R.id.button_register_sucessfully) {
             createAccount(edtCorreo.getText().toString(), edtContrasenia.getText().toString());
-
-            Intent intentoAprobado = new Intent(Activity_register.this, LoginActivity.class);
-            intentoAprobado.putExtra("pasoDeEmail", edtCorreo.getText().toString().trim());
-            startActivity(intentoAprobado);
+            if (usuarioCreado) {
+                Intent intentoAprobado = new Intent(Activity_register.this, LoginActivity.class);
+                intentoAprobado.putExtra("pasoDeEmail", edtCorreo.getText().toString().trim());
+                startActivity(intentoAprobado);
+            }
         }
     }
 
+    @Override
+
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 }

@@ -1,37 +1,35 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-
-
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/**
- * A login screen that offers login via email/password.
- */
+
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
 
-    AutoCompleteTextView  campoEmail;
+    AutoCompleteTextView campoEmail;
     private EditText campoPassword;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
+    //------------------------------->nuevo
+    private FirebaseAuth.AuthStateListener mAuthListener;//<----------------------
     // [END declare_auth]
 
     @Override
@@ -53,6 +51,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //------------------------------->nuevo
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d("Main Activity", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    Log.d("Main Activity", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
         // [END initialize_auth]
     }
 
@@ -63,16 +75,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
     // [END on_start_check_user]
 
     private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
+        /*Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
-
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -84,18 +94,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             toast1.show();
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+
 
                         }
                     }
                 });
-        // [END sign_in_with_email]
+        // [END sign_in_with_email]*/
+        mAuth.signInWithEmailAndPassword("example@email.com", "password")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Main Activity", "signInWithEmail:onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 
@@ -121,21 +140,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return valid;
     }
 
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            findViewById(R.id.email_sign_in_button).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.email_register_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.email_sign_in_button).setVisibility(View.VISIBLE);
-            //findViewById(R.id.email_sign_in_button).setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.email_sign_in_button) {
-            if(mAuth != null){
+            if (mAuth != null) {
                 signIn(campoEmail.getText().toString(), campoPassword.getText().toString());
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
@@ -146,5 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
     }
+
+
 }
 
