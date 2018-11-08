@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -91,10 +93,14 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoAlemania()).commit();
                 break;
             case R.id.nav_share:
-                Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, NuevoMainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_send:
-                Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
+                Intent intento = new Intent(this, Main2Activity.class);
+                startActivity(intento);
                 break;
             case R.id.help:
                 Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();

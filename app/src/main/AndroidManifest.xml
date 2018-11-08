@@ -24,6 +24,11 @@
             android:name=".MainActivity"
             android:label="@string/name_application"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".NuevoMainActivity"/>
+        <activity android:name="NuevoDetallesPelicula"/>
+        <activity android:name=".NuevoVisorImagen"/>
+        <activity android:name=".Main2Activity"/>
     </application>
 
 </manifest>
