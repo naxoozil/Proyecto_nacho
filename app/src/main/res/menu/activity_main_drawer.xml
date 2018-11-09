@@ -15,7 +15,6 @@
             android:title="Festivales de España" />
         <item
             android:id="@+id/nav_portugal"
-            android:checkable="false"
             android:enabled="true"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Festivales de Portugal"

@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     //------------------------------->nuevo
     private FirebaseAuth.AuthStateListener mAuthListener;//<----------------------
     // [END declare_auth]
@@ -51,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
         //------------------------------->nuevo
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -74,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
     // [END on_start_check_user]
 
@@ -146,11 +148,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (i == R.id.email_sign_in_button) {
             if (mAuth != null) {
                 signIn(campoEmail.getText().toString(), campoPassword.getText().toString());
+                //String str = mAuth.getCurrentUser().getDisplayName();
+                //Toast.makeText(LoginActivity.this, str, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+
             }
         } else if (i == R.id.email_register_button) {
             //Pasar datos a la segunda pantalla
+
             Intent intent = new Intent(this, Activity_register.class);
             startActivity(intent);
         }

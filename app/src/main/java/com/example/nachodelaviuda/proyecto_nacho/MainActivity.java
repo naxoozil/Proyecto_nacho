@@ -12,12 +12,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private TextView nombreUsuario, correoUsuario;
+    private FirebaseAuth nombreAuth, correoAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +41,19 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        nombreAuth = FirebaseAuth.getInstance();
+        String string = nombreAuth.getCurrentUser().getEmail();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //----------------------------------------------------------------------------------------------------------------------------------------------
+        nombreUsuario = (TextView) findViewById(R.id.nombreDeUsuario);
+        correoUsuario = (TextView) findViewById(R.id.correoUsuario);
+        View hView = navigationView.getHeaderView(0);
+        correoUsuario = (TextView) hView.findViewById(R.id.correoUsuario);
+        correoUsuario.setText(string);
+        //----------------------------------------------------------------------------------------------------------------------------------------------
+
+
         navigationView.setNavigationItemSelectedListener(this);
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPrincipal()).commit();

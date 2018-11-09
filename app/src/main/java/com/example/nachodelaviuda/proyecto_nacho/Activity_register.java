@@ -36,7 +36,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
     private EditText edtNombre;
     private EditText edtEdad;
     private EditText edtCorreo;
-    private EditText edtContrasenia;
+    private EditText edtcontrasenia;
     private EditText edtcontrasenia2;
     private boolean usuarioCreado;
 
@@ -49,16 +49,20 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
         findViewById(R.id.button_register_sucessfully).setOnClickListener(this);
 
         // Declaracion
-        edtNombre = findViewById(R.id.editText_register_name);
-        edtEdad = findViewById(R.id.editText_register_edad);
-        edtCorreo = findViewById(R.id.editText_register_correo);
-        edtContrasenia = findViewById(R.id.editText_register_password);
+        edtNombre       = findViewById(R.id.editText_register_name);
+        edtEdad         = findViewById(R.id.editText_register_edad);
+        edtCorreo       = findViewById(R.id.editText_register_correo);
+        edtcontrasenia  = findViewById(R.id.editText_register_password);
         edtcontrasenia2 = findViewById(R.id.editText_register_confirm_password);
 
         mAuth = FirebaseAuth.getInstance();
 
+
+
+
+
         //-------------NUEVO----------------------------
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -102,12 +106,12 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             edtCorreo.setError(null);
         }
 
-        String contrasenia = edtContrasenia.getText().toString();
+        String contrasenia = edtcontrasenia.getText().toString();
         if (TextUtils.isEmpty(contrasenia)) {
-            edtContrasenia.setError("Required.");
+            edtcontrasenia2.setError("Required.");
             continuar = false;
         } else {
-            edtContrasenia.setError(null);
+            edtcontrasenia2.setError(null);
         }
 
         String confirmarContrasenia = edtcontrasenia2.getText().toString();
@@ -189,7 +193,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             Intent intentoCancelar = new Intent(Activity_register.this, LoginActivity.class);
             startActivity(intentoCancelar);
         } else if (i == R.id.button_register_sucessfully) {
-            createAccount(edtCorreo.getText().toString(), edtContrasenia.getText().toString());
+            createAccount(edtCorreo.getText().toString(),edtcontrasenia .getText().toString());
             if (usuarioCreado) {
                 Intent intentoAprobado = new Intent(Activity_register.this, LoginActivity.class);
                 intentoAprobado.putExtra("pasoDeEmail", edtCorreo.getText().toString().trim());
