@@ -24,11 +24,17 @@
             android:name=".MainActivity"
             android:label="@string/name_application"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".NuevoMainActivity"/>
-        <activity android:name="NuevoDetallesPelicula"/>
-        <activity android:name=".NuevoVisorImagen"/>
-        <activity android:name=".Main2Activity"/>
+        <activity android:name=".NuevoMainActivity" />
+        <activity android:name=".NuevoDetallesPelicula" />
+        <activity android:name=".NuevoVisorImagen" />
+        <activity
+            android:name=".GestorDeTabs"
+            android:label="@string/title_activity_gestor_de_tabs"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nachodelaviuda.proyecto_nacho.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

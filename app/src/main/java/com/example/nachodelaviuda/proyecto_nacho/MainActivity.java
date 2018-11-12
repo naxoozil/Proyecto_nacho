@@ -1,8 +1,10 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,13 +22,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,Prueba.OnFragmentInteractionListener, ContenedorFragment.OnFragmentInteractionListener{
 
     private DrawerLayout drawer;
     private TextView nombreUsuario, correoUsuario;
-    private FirebaseAuth nombreAuth, correoAuth;
-
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +44,27 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        nombreAuth = FirebaseAuth.getInstance();
-        String string = nombreAuth.getCurrentUser().getEmail();
+        auth = FirebaseAuth.getInstance();
+        //String string = nombreAuth.getCurrentUser().getEmail();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //----------------------------------------------------------------------------------------------------------------------------------------------
-        nombreUsuario = (TextView) findViewById(R.id.nombreDeUsuario);
-        correoUsuario = (TextView) findViewById(R.id.correoUsuario);
         View hView = navigationView.getHeaderView(0);
+        nombreUsuario = (TextView) hView.findViewById(R.id.nombreDeUsuario);
         correoUsuario = (TextView) hView.findViewById(R.id.correoUsuario);
-        correoUsuario.setText(string);
-        //----------------------------------------------------------------------------------------------------------------------------------------------
+        try{
+            //nombreUsuario.setText(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName());
+            String str = auth.getCurrentUser().getDisplayName();
+            if(Utilidades.toastero){
+                Toast.makeText(this,"Bienvenido: " + str, Toast.LENGTH_SHORT).show();
+                Utilidades.toastero = false;
+            }
+            //Toast.makeText(this,"Bienvenido: " + str, Toast.LENGTH_SHORT).show();
+            nombreUsuario.setText(auth.getCurrentUser().getDisplayName());
+            correoUsuario.setText(auth.getCurrentUser().getEmail());
 
+        }catch (NullPointerException e){}
+        //----------------------------------------------------------------------------------------------------------------------------------------------
 
         navigationView.setNavigationItemSelectedListener(this);
         if(savedInstanceState == null){
@@ -96,40 +108,63 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment miFragment = null;
+        boolean fragmentoSeleccionado = false;
         switch(item.getItemId()){
             case R.id.nav_principal:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPrincipal()).commit();
+                miFragment = new FragmentoPrincipal();
+                fragmentoSeleccionado = true;
                 break;
             case R.id.nav_espana:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoEspaña()).commit();
-            break;
+                miFragment = new FragmentoEspaña();
+                fragmentoSeleccionado = true;
+                break;
             case R.id.nav_portugal:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPortugal()).commit();
+                miFragment = new FragmentoPortugal();
+                fragmentoSeleccionado = true;
                 break;
             case R.id.nav_bélgica:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoBelgica()).commit();
+                miFragment = new FragmentoBelgica();
+                fragmentoSeleccionado = true;
                 break;
             case R.id.nav_alemania:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoAlemania()).commit();
+                miFragment = new FragmentoAlemania();
+                fragmentoSeleccionado = true;
                 break;
             case R.id.nav_share:
                 //Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, NuevoMainActivity.class);
+                Intent intent = new Intent(MainActivity.this,GestorDeTabs.class);
                 startActivity(intent);
                 break;
             case R.id.nav_send:
-               // Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
-                Intent intento = new Intent(this, Main2Activity.class);
+                //Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
+                Intent intento = new Intent(MainActivity.this,NuevoMainActivity.class);
                 startActivity(intento);
                 break;
             case R.id.help:
-                Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
+                miFragment = new Prueba();
+                fragmentoSeleccionado = true;
                 break;
             case R.id.information:
-                Toast.makeText(this,"information", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"information", Toast.LENGTH_SHORT).show();
+                miFragment = new ContenedorFragment();
+                fragmentoSeleccionado = true;
                 break;
         }
+        if (fragmentoSeleccionado) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,miFragment).commit();
+        }
+
+
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
+
+    }
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

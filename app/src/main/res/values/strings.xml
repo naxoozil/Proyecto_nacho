@@ -25,9 +25,16 @@
     <string name="firebase_user_management">Firebase User Management</string>
 
 
-
     <string name="tab_stream">Stream</string>
     <string name="tab_messages">Messages</string>
     <string name="tab_notifications">Notifications</string>
     <string name="tab_photos">Photos</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_gestor_de_tabs">GestorDeTabs</string>
+    <string name="tab_text_general">GENERAL</string>
+    <string name="tab_text_galeria">GALERIA</string>
+    <string name="tab_text_otros">OTROS</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

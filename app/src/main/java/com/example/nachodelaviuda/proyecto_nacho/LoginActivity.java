@@ -77,11 +77,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+
     }
     // [END on_start_check_user]
 
     private void signIn(String email, String password) {
-        /*Log.d(TAG, "signIn:" + email);
+        Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
@@ -91,11 +92,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
                             // Sign in success, update UI with the signed-in user's information
-                            Toast toast1 = Toast.makeText(getApplicationContext(), "Prueba ASF", Toast.LENGTH_SHORT);
+                            String nomUser = mUser.getDisplayName();
+                            Toast toast1 = Toast.makeText(getApplicationContext(), nomUser, Toast.LENGTH_SHORT);
                             toast1.show();
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -106,8 +109,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
-        // [END sign_in_with_email]*/
-        mAuth.signInWithEmailAndPassword("example@email.com", "password")
+        // [END sign_in_with_email]
+
+
+
+        /*mAuth.signInWithEmailAndPassword("example@email.com", "password")
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -116,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
     }
 
 
@@ -148,8 +154,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (i == R.id.email_sign_in_button) {
             if (mAuth != null) {
                 signIn(campoEmail.getText().toString(), campoPassword.getText().toString());
-                //String str = mAuth.getCurrentUser().getDisplayName();
-                //Toast.makeText(LoginActivity.this, str, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
 

@@ -26,4 +26,12 @@
         <item name="android:lineSpacingMultiplier">1.1</item>
     </style>
 
+
+    <!-- probando -->
+    <style name="AppTheme.AppBarOverlay.prueba" parent="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
 </resources>

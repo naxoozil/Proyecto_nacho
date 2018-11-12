@@ -1,16 +1,13 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import java.util.ArrayList;
 
 public class Activity_register extends AppCompatActivity implements View.OnClickListener {
     /*
@@ -49,20 +45,16 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
         findViewById(R.id.button_register_sucessfully).setOnClickListener(this);
 
         // Declaracion
-        edtNombre       = findViewById(R.id.editText_register_name);
-        edtEdad         = findViewById(R.id.editText_register_edad);
-        edtCorreo       = findViewById(R.id.editText_register_correo);
-        edtcontrasenia  = findViewById(R.id.editText_register_password);
+        edtNombre = findViewById(R.id.editText_register_name);
+        edtEdad = findViewById(R.id.editText_register_edad);
+        edtCorreo = findViewById(R.id.editText_register_correo);
+        edtcontrasenia = findViewById(R.id.editText_register_password);
         edtcontrasenia2 = findViewById(R.id.editText_register_confirm_password);
 
         mAuth = FirebaseAuth.getInstance();
 
-
-
-
-
         //-------------NUEVO----------------------------
-       mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -108,10 +100,16 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
 
         String contrasenia = edtcontrasenia.getText().toString();
         if (TextUtils.isEmpty(contrasenia)) {
-            edtcontrasenia2.setError("Required.");
+            edtcontrasenia.setError("Required.");
             continuar = false;
-        } else {
-            edtcontrasenia2.setError(null);
+        }
+        else {
+            if (edtcontrasenia.toString().length() <= 5) {
+                edtcontrasenia.setError("La contraseña ha de ser mayor de 6 caracteres");
+                continuar = false;
+            } else {
+                edtcontrasenia.setError(null);
+            }
         }
 
         String confirmarContrasenia = edtcontrasenia2.getText().toString();
@@ -142,15 +140,13 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
                     //-------------NUEVO----------------------------
                     //Log.d("Main Activity", "createUserWithEmail:onComplete:" + task.isSuccessful());
                     //-------------NUEVO----------------------------
-
-
                     //[AZAHARA]--------------------------------------------------------------
                     if (task.isSuccessful()) {
                         usuario = mAuth.getCurrentUser();
                         //Agregamos el correo del usuario al perfil del usuario
                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().
                                 setDisplayName(edtNombre.getText().toString()).build();
-
+                        //setDisplayName(edtNombre.getText().toString()).build();
                         //Devolvemos el nombre de usuario para pasarselo al toast
                         usuario.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -172,7 +168,6 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
                         //       Toast.LENGTH_SHORT).show();
 
 
-                        //[Azahara]--------------------------------------------------------------
                         //En el caso de que exista el usuario no se volverá a crear
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             Toast.makeText(Activity_register.this, "El usuario ya existe", Toast.LENGTH_LONG).show();
@@ -193,7 +188,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             Intent intentoCancelar = new Intent(Activity_register.this, LoginActivity.class);
             startActivity(intentoCancelar);
         } else if (i == R.id.button_register_sucessfully) {
-            createAccount(edtCorreo.getText().toString(),edtcontrasenia .getText().toString());
+            createAccount(edtCorreo.getText().toString(), edtcontrasenia.getText().toString());
             if (usuarioCreado) {
                 Intent intentoAprobado = new Intent(Activity_register.this, LoginActivity.class);
                 intentoAprobado.putExtra("pasoDeEmail", edtCorreo.getText().toString().trim());
@@ -208,6 +203,7 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();

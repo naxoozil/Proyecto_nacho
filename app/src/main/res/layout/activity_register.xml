@@ -33,7 +33,7 @@
                 android:layout_margin="5dp"
                 android:ems="10"
                 android:hint="Nombre de usuario"
-                android:inputType="textPersonName"
+                android:inputType="textAutoComplete"
                 tools:layout_editor_absoluteX="37dp"
                 tools:layout_editor_absoluteY="63dp" />
 
@@ -54,7 +54,7 @@
                 android:layout_margin="5dp"
                 android:ems="10"
                 android:hint="Correo"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/editText_register_password"
@@ -63,7 +63,7 @@
                 android:layout_margin="5dp"
                 android:ems="10"
                 android:hint="Contraseña"
-                android:inputType="textVisiblePassword" />
+                android:inputType="textPassword" />
 
             <EditText
                 android:id="@+id/editText_register_confirm_password"
