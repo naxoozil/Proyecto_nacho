@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.nachodelaviuda.proyecto_nacho.R;
+
 public class FragmentoAlemania extends Fragment {
 
     @Nullable

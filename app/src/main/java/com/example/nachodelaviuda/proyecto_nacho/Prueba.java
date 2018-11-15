@@ -1,12 +1,14 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -85,7 +87,17 @@ public class Prueba extends Fragment {
         listadoPrueba.getContext();
 
         listadoPrueba.setAdapter(new NuevoAdaptador(this.getContext(), datos, datosImg));
-
+        listadoPrueba.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*Intent visorDetalles = new Intent(view.getContext(), NuevoDetallesPelicula.class);
+                visorDetalles.putExtra("TIT", datos[position][0]);
+                visorDetalles.putExtra("DET", datos[position][4]);
+                startActivity(visorDetalles);*/
+                Intent visorDetalles = new Intent(view.getContext(), GestorDeTabs.class);
+                startActivity(visorDetalles);
+            }
+        });
 
 
         return vista;
@@ -127,7 +139,6 @@ public class Prueba extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

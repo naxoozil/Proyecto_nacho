@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "787255851218-7gus6optqcabbc09vdn5m6upe7m3o62v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nachodelaviuda.proyecto_nacho",
+            "certificate_hash": "03edc33ee0c40b53e0d3f60d94ae2a453a4eb91a"
+          }
+        },
+        {
+          "client_id": "787255851218-i2lb4kg2h661tepoctta6t8hqm334rrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nachodelaviuda.proyecto_nacho",
+            "certificate_hash": "40a91ce36e5d51dfd664daeee97ee902095899a2"
+          }
+        },
+        {
           "client_id": "787255851218-4jjmmes4lvnop9isunn1a98dkf9dkih3.apps.googleusercontent.com",
           "client_type": 3
         }
