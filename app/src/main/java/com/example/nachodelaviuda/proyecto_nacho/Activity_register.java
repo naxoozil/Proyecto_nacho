@@ -134,7 +134,6 @@ public class Activity_register extends AppCompatActivity implements View.OnClick
             Toast.makeText(Activity_register.this, "No se ha completado el registro", Toast.LENGTH_LONG).show();
         } else {
             // [START create_user_with_email]
-            Toast.makeText(Activity_register.this, "De momento vas bn", Toast.LENGTH_LONG).show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

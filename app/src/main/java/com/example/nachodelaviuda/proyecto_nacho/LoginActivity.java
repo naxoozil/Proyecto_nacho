@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -42,8 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Views
         campoEmail = (AutoCompleteTextView) findViewById(R.id.email);
-        String recuperoIntent = getIntent().getStringExtra("pasoDeEmail");
-        campoEmail.setText(recuperoIntent);
+        //String recuperoIntent = getIntent().getStringExtra("pasoDeEmail");
+        //campoEmail.setText(recuperoIntent);
         campoPassword = findViewById(R.id.password);
 
         // Buttons
@@ -54,7 +53,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
         //------------------------------->nuevo
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -65,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     Log.d("Main Activity", "onAuthStateChanged:signed_out");
                 }
-                // ...
+
             }
         };
 
@@ -78,16 +80,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        mAuth = FirebaseAuth.getInstance();
 
     }
+
     // [END on_start_check_user]
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-        // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,19 +111,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
         // [END sign_in_with_email]
-
-
-
-        /*mAuth.signInWithEmailAndPassword("example@email.com", "password")
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Main Activity", "signInWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
     }
 
 
@@ -153,15 +140,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.email_sign_in_button) {
-            if (mAuth != null) {
+            if (validateForm()) {
                 signIn(campoEmail.getText().toString(), campoPassword.getText().toString());
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-
             }
         } else if (i == R.id.email_register_button) {
-            //Pasar datos a la segunda pantalla
-
             Intent intent = new Intent(this, Activity_register.class);
             startActivity(intent);
         }

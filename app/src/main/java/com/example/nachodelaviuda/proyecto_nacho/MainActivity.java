@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,Prueba.OnFragmentInteractionListener, ContenedorFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, Prueba.OnFragmentInteractionListener, ContenedorFragment.OnFragmentInteractionListener {
 
     private DrawerLayout drawer;
     private TextView nombreUsuario, correoUsuario;
@@ -46,23 +46,24 @@ public class MainActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         nombreUsuario = (TextView) hView.findViewById(R.id.nombreDeUsuario);
         correoUsuario = (TextView) hView.findViewById(R.id.correoUsuario);
-        try{
+        try {
             //nombreUsuario.setText(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName());
             String str = auth.getCurrentUser().getDisplayName();
-            if(Utilidades.toastero){
-                Toast.makeText(this,"Bienvenido: " + str, Toast.LENGTH_SHORT).show();
+            if (Utilidades.toastero) {
+                Toast.makeText(this, "Bienvenido: " + str, Toast.LENGTH_SHORT).show();
                 Utilidades.toastero = false;
             }
             //Toast.makeText(this,"Bienvenido: " + str, Toast.LENGTH_SHORT).show();
             nombreUsuario.setText(auth.getCurrentUser().getDisplayName());
             correoUsuario.setText(auth.getCurrentUser().getEmail());
 
-        }catch (NullPointerException e){}
+        } catch (NullPointerException e) {
+        }
         //----------------------------------------------------------------------------------------------------------------------------------------------
 
         navigationView.setNavigationItemSelectedListener(this);
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentoPrincipal()).commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentoPrincipal()).commit();
             navigationView.setCheckedItem(R.id.nav_principal);
         }
     }
@@ -90,10 +91,15 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.action_end_session) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -104,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Fragment miFragment = null;
         boolean fragmentoSeleccionado = false;
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_principal:
                 miFragment = new FragmentoPrincipal();
                 fragmentoSeleccionado = true;
@@ -127,12 +133,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_share:
                 //Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this,GestorDeTabs.class);
+                Intent intent = new Intent(MainActivity.this, GestorDeTabs.class);
                 startActivity(intent);
                 break;
             case R.id.nav_send:
                 //Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
-                Intent intento = new Intent(MainActivity.this,NuevoMainActivity.class);
+                Intent intento = new Intent(MainActivity.this, NuevoMainActivity.class);
                 startActivity(intento);
                 break;
             case R.id.help:
@@ -147,9 +153,8 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         if (fragmentoSeleccionado) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,miFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, miFragment).commit();
         }
-
 
 
         drawer.closeDrawer(GravityCompat.START);
@@ -157,6 +162,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
