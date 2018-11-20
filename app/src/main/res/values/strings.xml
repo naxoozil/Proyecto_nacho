@@ -39,6 +39,14 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
 
-    <string name="descripcion_festival">Boom Festival comenzó en 1997 como un festival de música de trance psicodélico con un escenario principal
-        y una sala de estar con música suave y " chill-out ".</string>
+    <string name="principal">Principal</string>
+    <string name="europa">Europa</string>
+    <string name="america_norte">América del norte</string>
+    <string name="america_sur">América del sur</string>
+    <string name="asia">Asia</string>
+    <string name="comunicacion">Comunicación</string>
+    <string name="conversar">Conversar</string>
+    <string name="guia">Guía para el usuario</string>
+    <string name="help">Help</string>
+    <string name="informacion">Información</string>
 </resources>

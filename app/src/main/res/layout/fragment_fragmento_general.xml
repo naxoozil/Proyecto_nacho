@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="Boom Festival"
                     android:textAlignment="center"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <View
                     android:id="@+id/divider"
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp"
-                    android:text="@string/descripcion_festival" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>

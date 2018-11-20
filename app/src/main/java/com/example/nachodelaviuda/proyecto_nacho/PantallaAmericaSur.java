@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.nachodelaviuda.proyecto_nacho.R;
 
-public class FragmentoBelgica extends Fragment {
+public class PantallaAmericaSur extends Fragment {
 
     @Nullable
     @Override

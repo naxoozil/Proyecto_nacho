@@ -7,51 +7,45 @@
 
         <item
             android:id="@+id/nav_principal"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Principal" />
+            android:icon="@drawable/brujula"
+            android:title="@string/principal" />
         <item
-            android:id="@+id/nav_espana"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Festivales de España" />
+            android:id="@+id/nav_europa"
+            android:icon="@drawable/europa"
+            android:title="@string/europa" />
         <item
-            android:id="@+id/nav_portugal"
-            android:enabled="true"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Festivales de Portugal"
-            android:visible="true" />
+            android:id="@+id/nav_america_norte"
+            android:icon="@drawable/mapa"
+            android:title="@string/america_norte" />
         <item
-            android:id="@+id/nav_bélgica"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Festivales de Bélgica" />
+            android:id="@+id/nav_america_sur"
+            android:icon="@drawable/americasur"
+            android:title="@string/america_sur" />
         <item
-            android:id="@+id/nav_alemania"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Festivales de Alemania" />
+            android:id="@+id/nav_asia"
+            android:icon="@drawable/asia"
+            android:title="@string/asia" />
     </group>
 
 
 
-    <item android:title="Communicate">
+    <item android:title="@string/comunicacion">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/conversar" />
         </menu>
     </item>
 
-    <item android:title="Guide for the user">
+    <item android:title="@string/guia">
     <menu>
         <item
             android:id="@+id/help"
-            android:title="Help" />
+            android:title="@string/help" />
         <item
             android:id="@+id/information"
-            android:title="Information" />
+            android:title="@string/informacion"/>
     </menu>
 </item>
 

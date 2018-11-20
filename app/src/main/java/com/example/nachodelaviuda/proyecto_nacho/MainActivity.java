@@ -19,12 +19,11 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Prueba.OnFragmentInteractionListener, ContenedorFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ContenedorFragment.OnFragmentInteractionListener{
 
     private DrawerLayout drawer;
     private TextView nombreUsuario, correoUsuario;
     private FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentoPrincipal()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PantallaPrincipal()).commit();
             navigationView.setCheckedItem(R.id.nav_principal);
         }
     }
@@ -112,39 +111,39 @@ public class MainActivity extends AppCompatActivity
         boolean fragmentoSeleccionado = false;
         switch (item.getItemId()) {
             case R.id.nav_principal:
-                miFragment = new FragmentoPrincipal();
+                Utilidades.proveniencia = "principal";
+                miFragment = new PantallaPrincipal();
                 fragmentoSeleccionado = true;
                 break;
-            case R.id.nav_espana:
-                miFragment = new FragmentoEspaña();
-                fragmentoSeleccionado = true;
+            case R.id.nav_europa:
+                Utilidades.proveniencia = "europa";
+                Intent intentoEuropa = new Intent(MainActivity.this, ListaDeFestivales.class);
+                startActivity(intentoEuropa);
+                //miFragment = new PantallaEspana();
+                //fragmentoSeleccionado = true;
                 break;
-            case R.id.nav_portugal:
-                miFragment = new FragmentoPortugal();
-                fragmentoSeleccionado = true;
-                break;
-            case R.id.nav_bélgica:
-                miFragment = new FragmentoBelgica();
-                fragmentoSeleccionado = true;
-                break;
-            case R.id.nav_alemania:
-                miFragment = new FragmentoAlemania();
-                fragmentoSeleccionado = true;
-                break;
-            case R.id.nav_share:
-                //Toast.makeText(this,"share", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, GestorDeTabs.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_send:
-                //Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
-                Intent intento = new Intent(MainActivity.this, NuevoMainActivity.class);
+            case R.id.nav_america_norte:
+                Utilidades.proveniencia = "norteamerica";
+                Intent intento = new Intent(MainActivity.this, ListaDeFestivales.class);
                 startActivity(intento);
                 break;
-            case R.id.help:
-                //Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
-                miFragment = new Prueba();
+            case R.id.nav_america_sur:
+                Utilidades.proveniencia = "americasur";
+                miFragment = new PantallaAmericaSur();
                 fragmentoSeleccionado = true;
+                break;
+            case R.id.nav_asia:
+                Utilidades.proveniencia = "asia";
+                //miFragment = new FragmentoAlemania();
+                //fragmentoSeleccionado = true;
+                Intent jajaja = new Intent(MainActivity.this, RecogerImagenes.class);
+                startActivity(jajaja);
+                break;
+            case R.id.nav_send:
+                Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.help:
+                Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.information:
                 //Toast.makeText(this,"information", Toast.LENGTH_SHORT).show();
