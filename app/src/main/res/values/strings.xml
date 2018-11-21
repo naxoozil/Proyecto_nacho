@@ -49,4 +49,6 @@
     <string name="guia">Guía para el usuario</string>
     <string name="help">Help</string>
     <string name="informacion">Información</string>
+
+    <string name="puntua"><u>Puntúa este festival</u></string>
 </resources>

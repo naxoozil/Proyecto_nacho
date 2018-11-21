@@ -141,7 +141,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_send:
                 Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
-                break;
+                //Intent jojojo = new Intent(MainActivity.this, MapsActivity.class);
+               // startActivity(jojojo);
+                //break;
             case R.id.help:
                 Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
                 break;

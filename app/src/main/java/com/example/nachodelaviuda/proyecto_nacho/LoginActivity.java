@@ -67,13 +67,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     Log.d("Main Activity", "onAuthStateChanged:signed_out");
                 }
-
             }
         };
 
         // [END initialize_auth]
     }
-
     // [START on_start_check_user]
     // verifica que el usuario haya accedido
     @Override
