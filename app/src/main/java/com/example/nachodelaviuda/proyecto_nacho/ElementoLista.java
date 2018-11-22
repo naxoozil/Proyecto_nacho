@@ -7,16 +7,20 @@ public class ElementoLista {
     private String imagenId;
     private int rate;
     private String descripcion;
+    private float latitud;
+    private float longitud;
 
     public ElementoLista(){
     }
 
-    public ElementoLista(String nombre, String lugar, String imagenId, int rate,String descripcion) {
+    public ElementoLista(String nombre, String lugar, String imagenId, int rate,String descripcion, float latitud, float longitud) {
         this.nombre     = nombre;
         this.lugar      = lugar;
         this.imagenId   = imagenId;
         this.rate       = rate;
         this.descripcion = descripcion;
+        this.latitud       = latitud;
+        this.longitud       = longitud;
     }
 
     public String getNombre() {
@@ -57,5 +61,21 @@ public class ElementoLista {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public float getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(float latitud) {
+        this.latitud = latitud;
+    }
+
+    public float getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(float longitud) {
+        this.longitud = longitud;
     }
 }

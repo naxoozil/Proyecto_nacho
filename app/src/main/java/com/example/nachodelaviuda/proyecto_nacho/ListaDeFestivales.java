@@ -35,7 +35,7 @@ public class ListaDeFestivales extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.reciclerId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ElementoLista elementoLista = new ElementoLista("nombre", "lugar",
-                "https://firebasestorage.googleapis.com/v0/b/festivaleo-global.appspot.com/o/umf.png?alt=media&token=543bd3a4-2a3f-40d9-960b-877eaa7e72ca", 3,"bibliografia");
+                "https://firebasestorage.googleapis.com/v0/b/festivaleo-global.appspot.com/o/umf.png?alt=media&token=543bd3a4-2a3f-40d9-960b-877eaa7e72ca", 3,"bibliografia",2,2);
         listaElementos.add(elementoLista);
         adapter = new AdaptadorListaFestivales(ListaDeFestivales.this, listaElementos);
 
@@ -61,6 +61,8 @@ public class ListaDeFestivales extends AppCompatActivity {
                         intento.putExtra("lugar",listaElementos.get(recyclerView.getChildAdapterPosition(v)).getLugar());
                         intento.putExtra("img",listaElementos.get(recyclerView.getChildAdapterPosition(v)).getImagenId());
                         intento.putExtra("descripcion",listaElementos.get(recyclerView.getChildAdapterPosition(v)).getDescripcion());
+                        Utilidades.latitud = listaElementos.get(recyclerView.getChildAdapterPosition(v)).getLatitud();
+                        Utilidades.longitud = listaElementos.get(recyclerView.getChildAdapterPosition(v)).getLongitud();
                         startActivity(intento);
 
 

@@ -38,7 +38,7 @@
     <string name="tab_text_otros">OTROS</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-
+    <!-- Strings del navigation drawer -->
     <string name="principal">Principal</string>
     <string name="europa">Europa</string>
     <string name="america_norte">América del norte</string>
@@ -50,5 +50,11 @@
     <string name="help">Help</string>
     <string name="informacion">Información</string>
 
+    <!-- Strings de la actividad de otros -->
     <string name="puntua"><u>Puntúa este festival</u></string>
+    <string name ="oficiales">Páginas oficiales</string>
+    <string name="mapa">Mostrar mapa del lugar</string>
+    <string name="ubicacion">Ubicación</string>
+
+
 </resources>
