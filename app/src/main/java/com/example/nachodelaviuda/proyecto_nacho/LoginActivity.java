@@ -1,6 +1,7 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_register_button).setOnClickListener(this);
-
+        findViewById(R.id.interneto).setOnClickListener(this);
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
+
         //------------------------------->nuevo
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -146,9 +148,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (i == R.id.email_register_button) {
             Intent intent = new Intent(this, Activity_register.class);
             startActivity(intent);
+        } else if (i == R.id.interneto) {
+            Uri uri = Uri.parse("http://telegram.me/FestivaleoChat_bot");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
+
     }
-
-
 }
 

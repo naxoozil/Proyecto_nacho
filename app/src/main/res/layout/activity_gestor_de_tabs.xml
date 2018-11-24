@@ -5,50 +5,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GestorDeTabs">
+    tools:context=".GestorDeTabs"
+    android:background="@color/grey">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbargestor"
-        android:background="@color/azulpalo"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.NoActionBar">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbaru"
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            >
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false"
+            app:tabIndicatorColor="@color/rojo"
+            app:tabInlineLabel="false"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@color/design_default_color_primary_dark"
+            app:tabTextColor="@color/blanco">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:tabIndicatorColor="@color/common_google_signin_btn_text_dark_focused"
-                app:tabInlineLabel="false"
-                app:tabTextColor="@color/rojo">
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_text_general" />
 
-                <android.support.design.widget.TabItem
-                    android:id="@+id/tabItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_text_general" />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_text_galeria" />
 
-                <android.support.design.widget.TabItem
-                    android:id="@+id/tabItem2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_text_galeria" />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_text_otros" />
 
-                <android.support.design.widget.TabItem
-                    android:id="@+id/tabItem3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tab_text_otros" />
+        </android.support.design.widget.TabLayout>
 
-            </android.support.design.widget.TabLayout>
 
-        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

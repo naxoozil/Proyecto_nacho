@@ -1,5 +1,10 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
+import com.example.nachodelaviuda.proyecto_nacho.galeria.ElementoGaleria;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class ElementoLista {
 
     private String nombre;
@@ -9,20 +14,22 @@ public class ElementoLista {
     private String descripcion;
     private float latitud;
     private float longitud;
+    private ArrayList galeria;
 
     public ElementoLista(){
     }
 
-    public ElementoLista(String nombre, String lugar, String imagenId, int rate,String descripcion, float latitud, float longitud) {
-        this.nombre     = nombre;
-        this.lugar      = lugar;
-        this.imagenId   = imagenId;
-        this.rate       = rate;
-        this.descripcion = descripcion;
-        this.latitud       = latitud;
+    public ElementoLista(String nombre, String lugar, String imagenId, int rate,String descripcion, float latitud, float longitud,ArrayList galeria) {
+        this.nombre         = nombre;
+        this.lugar          = lugar;
+        this.imagenId       = imagenId;
+        this.rate           = rate;
+        this.descripcion    = descripcion;
+        this.latitud        = latitud;
         this.longitud       = longitud;
-    }
+        this.galeria        = galeria;
 
+    }
     public String getNombre() {
         return nombre;
     }
@@ -63,19 +70,15 @@ public class ElementoLista {
         this.descripcion = descripcion;
     }
 
-    public float getLatitud() {
-        return latitud;
-    }
+    public float getLatitud() { return latitud; }
 
-    public void setLatitud(float latitud) {
-        this.latitud = latitud;
-    }
+    public void setLatitud(float latitud) { this.latitud = latitud; }
 
-    public float getLongitud() {
-        return longitud;
-    }
+    public float getLongitud() { return longitud; }
 
-    public void setLongitud(float longitud) {
-        this.longitud = longitud;
-    }
+    public void setLongitud(float longitud) { this.longitud = longitud; }
+
+    public ArrayList getGaleria() { return galeria; }
+
+    public void setGaleria(ArrayList galeria) { this.galeria = galeria; }
 }

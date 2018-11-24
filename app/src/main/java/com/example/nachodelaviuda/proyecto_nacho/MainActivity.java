@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ContenedorFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, ContenedorFragment.OnFragmentInteractionListener,FragmentoInformacion.OnFragmentInteractionListener{
 
     private DrawerLayout drawer;
     private TextView nombreUsuario, correoUsuario;
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_america_norte:
                 Utilidades.proveniencia = "norteamerica";
-                Intent intento = new Intent(MainActivity.this, ListaDeFestivales.class);
-                startActivity(intento);
+                Intent intentoAmNor = new Intent(MainActivity.this, ListaDeFestivales.class);
+                startActivity(intentoAmNor);
                 break;
             case R.id.nav_america_sur:
                 Utilidades.proveniencia = "americasur";
@@ -134,22 +134,20 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_asia:
                 Utilidades.proveniencia = "asia";
-                //miFragment = new FragmentoAlemania();
-                //fragmentoSeleccionado = true;
+                Intent intentoAsia = new Intent(MainActivity.this, RecogerImagenes.class);
+                startActivity(intentoAsia);
+                break;
+            case R.id.nav_send:
+                //Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
                 Intent jajaja = new Intent(MainActivity.this, RecogerImagenes.class);
                 startActivity(jajaja);
                 break;
-            case R.id.nav_send:
-                Toast.makeText(this,"send", Toast.LENGTH_SHORT).show();
-                //Intent jojojo = new Intent(MainActivity.this, MapsActivity.class);
-               // startActivity(jojojo);
-                //break;
             case R.id.help:
                 Toast.makeText(this,"help", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.information:
                 //Toast.makeText(this,"information", Toast.LENGTH_SHORT).show();
-                miFragment = new ContenedorFragment();
+                miFragment = new FragmentoInformacion();
                 fragmentoSeleccionado = true;
                 break;
         }
@@ -163,6 +161,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

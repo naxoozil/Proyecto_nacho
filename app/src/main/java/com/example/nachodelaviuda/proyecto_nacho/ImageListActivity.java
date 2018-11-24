@@ -1,14 +1,11 @@
 package com.example.nachodelaviuda.proyecto_nacho;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,25 +28,25 @@ public class ImageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_list);
 
-        imgList =new ArrayList<>();
+        imgList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.listViewImage);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait");
         progressDialog.show();
-
-        mDatabaseRef =FirebaseDatabase.getInstance().getReference(RecogerImagenes.FB_DATABASE_PATH);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("galeria" + Utilidades.nombreUbi);
+        //mDatabaseRef = FirebaseDatabase.getInstance().getReference(RecogerImagenes.FB_DATABASE_PATH);
         Log.i("Escribeme", mDatabaseRef.toString());
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     SubirImagen img = dataSnapshot1.getValue(SubirImagen.class);
-                    Log.i("Escribeme", img.getUrl().toString());
+                    //Log.i("Escribeme", img.getUrl().toString());
                     imgList.add(img);
 
                 }
-                adapter = new ImageListAdapter(ImageListActivity.this,R.layout.image_item,imgList);
+                adapter = new ImageListAdapter(ImageListActivity.this, R.layout.image_item, imgList);
                 lv.setAdapter(adapter);
 
             }

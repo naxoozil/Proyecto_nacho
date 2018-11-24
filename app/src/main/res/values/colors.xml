@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#d81b60</color>
     <color name="rojo">#e60026</color>
     <color name="blanco">#ffffff</color>
@@ -9,4 +9,5 @@
     <color name ="grey">#757575</color>
     <color name="negro">#000000</color>
     <color name="azul_claro">#DF68C5D6</color>
+    <color name="naranja">#ffdcaf</color>
 </resources>

@@ -8,8 +8,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="action_end_session">End session</string>
+
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="entrar">Entrar</string>
+    <string name="registrarse">Registrarse</string>
+
+    <string name="prompt_email"> Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -20,6 +24,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings registro -->
+    <string name="nombreRegistro">Nombre de usuario</string>
+    <string name="edad">Edad</string>
+    <string name="correo">Correo</string>
+    <string name="contrasenia">Contrase&#241;a</string>
+    <string name="confirmarContrasenia">Confirmar contrase&#241;a</string>
+    <string name="cancelar">Cancelar</string>
 
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="firebase_user_management">Firebase User Management</string>
@@ -41,20 +53,33 @@
     <!-- Strings del navigation drawer -->
     <string name="principal">Principal</string>
     <string name="europa">Europa</string>
-    <string name="america_norte">América del norte</string>
-    <string name="america_sur">América del sur</string>
+    <string name="america_norte">Am&#233;rica del norte</string>
+    <string name="america_sur">Am&#233;rica del sur</string>
     <string name="asia">Asia</string>
-    <string name="comunicacion">Comunicación</string>
+    <string name="comunicacion">Comunicaci&#243;n</string>
     <string name="conversar">Conversar</string>
-    <string name="guia">Guía para el usuario</string>
+    <string name="guia">Gu&#237;a para el usuario</string>
     <string name="help">Help</string>
-    <string name="informacion">Información</string>
+    <string name="informacion">Informaci&#243;n</string>
 
     <!-- Strings de la actividad de otros -->
-    <string name="puntua"><u>Puntúa este festival</u></string>
-    <string name ="oficiales">Páginas oficiales</string>
+    <string name="puntua"><u>Punt&#250;a este festival</u></string>
+    <string name="oficiales">P&#225;ginas oficiales</string>
     <string name="mapa">Mostrar mapa del lugar</string>
-    <string name="ubicacion">Ubicación</string>
+    <string name="ubicacion">Ubicaci&#243;n</string>
 
+    <!-- Strings fragmento de informacion -->
+    <string name="informacionDe">Informaci&#243;n</string>
+    <string name="acercaDe">Acerca de m&#237;</string>
+    <string name="miNombre">Nombre: Ignacio De La Viuda</string>
+    <string name="dudas">Dudas y preguntas</string>
+    <string name="dudasPreguntas">Escriba aqu&#237; su mensaje</string>
+    <string name="acercaD">Informaci&#243;n</string>
+
+
+    <string name="agradecimientos1">Agradecimientos</string>
+    <string name="agradecimientos2">Agradecimientos a FlatIcon por el uso de los iconos de su p&#225;gina web: <b>www.flaticon.com</b></string>
+
+    <string name="copyright"><i><u>&#169; Copyright: Ignacio De La Viuda</u></i></string>
 
 </resources>

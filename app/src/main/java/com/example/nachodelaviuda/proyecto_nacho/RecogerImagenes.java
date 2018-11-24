@@ -5,32 +5,29 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.nachodelaviuda.proyecto_nacho.galeria.ElementoGaleria;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StreamDownloadTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class RecogerImagenes extends AppCompatActivity {
     StorageReference mStorageRef;
@@ -48,8 +45,8 @@ public class RecogerImagenes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recoger_imagenes);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(FB_DATABASE_PATH);
+        mStorageRef = FirebaseStorage.getInstance().getReference("galeria" + Utilidades.nombreUbi);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("galeria" + Utilidades.nombreUbi);
 
         imageView = (ImageView) findViewById(R.id.nuevoImageView);
         edtImageName = (EditText) findViewById(R.id.txtImageName);
@@ -66,37 +63,41 @@ public class RecogerImagenes extends AppCompatActivity {
 
     public void btnUpload_click(View view) {
         if (uri != null) {
-            Log.i("LOG:", uri.toString());
+            Log.i("LOG1:", uri.toString());
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setTitle("UploadingImage");
             dialog.show();
-            StorageReference ref = mStorageRef.child(FB_STORAGE_PATH + System.currentTimeMillis() + "." + getImageExt(uri));
-            ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+            final StorageReference ref = mStorageRef.child(System.currentTimeMillis() + "." + getImageExt(uri));
+            UploadTask uploadTask = ref.putFile(uri);
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        dialog.dismiss();
+                        throw task.getException();
 
-                    SubirImagen subirImagen = new SubirImagen(edtImageName.getText().toString(), taskSnapshot.getUploadSessionUri().toString());
-                    String uploadId = mDatabaseRef.push().getKey();
-                    mDatabaseRef.child(uploadId).setValue(subirImagen);
-
+                    }
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl();
                 }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            dialog.dismiss();
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                            dialog.setMessage("Uploaded: " + (int) progress + "%");
-                        }
-                    });
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        Log.i("LOG2:", downloadUri.toString());
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+                        SubirImagen subirImagen = new SubirImagen(edtImageName.getText().toString(), downloadUri.toString());
+                        String uploadId = mDatabaseRef.push().getKey();
+                        mDatabaseRef.child(uploadId).setValue(subirImagen);
+                    } else {
+
+                    }
+                }
+            });
+
         } else {
             Toast.makeText(getApplicationContext(), "Please select Image", Toast.LENGTH_SHORT).show();
         }
