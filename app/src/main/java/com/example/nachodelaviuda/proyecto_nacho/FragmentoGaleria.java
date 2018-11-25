@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nachodelaviuda.proyecto_nacho.galeria.ElementoGaleria;
 import com.example.nachodelaviuda.proyecto_nacho.galeria.GaleriaAdaptador;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FragmentoGaleria extends Fragment {
@@ -80,7 +78,7 @@ public class FragmentoGaleria extends Fragment {
             }
         });
 
-        SubirImagen sbimg = new SubirImagen("nacho","https://firebasestorage.googleapis.com/v0/b/festivaleo-global.appspot.com/o/galeriaTomorrowland%2F1543055976126.jpg?alt=media&token=8a75e45d-66f2-4e2e-afc6-73e9fdac9869");
+        SubirImagen sbimg = new SubirImagen("nacho", "https://firebasestorage.googleapis.com/v0/b/festivaleo-global.appspot.com/o/galeriaTomorrowland%2F1543055976126.jpg?alt=media&token=8a75e45d-66f2-4e2e-afc6-73e9fdac9869");
         imgList.add(sbimg);
         adapter = new GaleriaAdaptador(getContext(), imgList);
 

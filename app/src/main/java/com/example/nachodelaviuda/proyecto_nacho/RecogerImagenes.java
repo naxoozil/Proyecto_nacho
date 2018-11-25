@@ -14,6 +14,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.nachodelaviuda.proyecto_nacho.galeria.ElementoGaleria;
@@ -50,7 +51,6 @@ public class RecogerImagenes extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.nuevoImageView);
         edtImageName = (EditText) findViewById(R.id.txtImageName);
-
 
     }
 
